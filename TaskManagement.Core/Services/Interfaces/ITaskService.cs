@@ -1,12 +1,13 @@
-﻿namespace TaskManagement.Core.Services.Interfaces
+﻿namespace TaskManagement.Core.Services.Interfaces;
+using Task = TaskManagement.Domain.Entities.Task;
+
 {
     public interface ITaskService
     {
         Task<Task> GetTaskByIdAsync(int id);
         Task<IEnumerable<Task>> GetAllTasksAsync();
-        Task<Task> CreateTaskAsync(Task task);
-        Task<Task> UpdateTaskAsync(int id, Task task);
+        Task<Task> CreateTaskAsync(Domain.Entities.Task task);
+        Task<Task> UpdateTaskAsync(int id, Domain.Entities.Task task);
         Task<bool> DeleteTaskAsync(int id);
-        Task CreateTaskAsync(Domain.Entities.Task task);
     }
 }

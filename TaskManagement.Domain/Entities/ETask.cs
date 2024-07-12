@@ -4,7 +4,7 @@ using System.Reflection.Metadata;
 
 namespace TaskManagement.Domain.Entities
 {
-    public class Task
+    public class ETask
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -16,7 +16,7 @@ namespace TaskManagement.Domain.Entities
         public ICollection<Document> Documents { get; set; }
         public ICollection<Note> Notes { get; set; }
 
-        public Task()
+        public ETask()
         {
             Documents = new List<Document>();
             Notes = new List<Note>();

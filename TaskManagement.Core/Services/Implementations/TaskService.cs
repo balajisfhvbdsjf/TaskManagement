@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using TaskManagement.Core.Repositories.Interfaces;
 using TaskManagement.Core.Services.Interfaces;
 using TaskManagement.Domain.Entities;
 using Task = TaskManagement.Domain.Entities.Task;
