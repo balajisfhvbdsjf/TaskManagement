@@ -23,14 +23,18 @@ builder.Services.AddDbContext<TaskManagementDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeManagementConnection"));
 });
 
-// Register services and repositories
-builder.Services.AddScoped<ITaskService, TaskService>();
-//builder.Services.AddScoped<IUserService, UserService>();
-//builder.Services.AddScoped<ITeamService, TeamService>();
-
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-//builder.Services.AddScoped<IUserRepository, UserRepository>();
-//builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
+//builder.Services.AddScoped<INoteRepository, NoteRepository>();
+
+// Register services
+builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<IDocumentService, DocumentService>();
+//builder.Services.AddScoped<INoteService, NoteService>();
 
 var app = builder.Build();
 
