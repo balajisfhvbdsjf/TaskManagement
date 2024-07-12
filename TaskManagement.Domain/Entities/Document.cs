@@ -9,6 +9,6 @@ namespace TaskManagement.Domain.Entities
         public string FilePath { get; set; }
         public DateTime UploadedAt { get; set; }
         public int TaskId { get; set; }
-        public Task Task { get; set; }
+        public ETask ETask { get; set; }
     }
 }

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using TaskManagement.Core.Repositories.Interfaces;
 using TaskManagement.Core.Services.Interfaces;
 using TaskManagement.Domain.Entities;
-using Task = TaskManagement.Domain.Entities.Task;
 
 namespace TaskManagement.Core.Services
 {
@@ -16,24 +15,24 @@ namespace TaskManagement.Core.Services
             _taskRepository = taskRepository;
         }
 
-        public async Task<Task> GetTaskByIdAsync(int id)
+        public async Task<ETask> GetTaskByIdAsync(int id)
         {
             return await _taskRepository.GetTaskByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Task>> GetAllTasksAsync()
+        public async Task<IEnumerable<ETask>> GetAllTasksAsync()
         {
             return await _taskRepository.GetAllTasksAsync();
         }
 
-        public async Task<Task> CreateTaskAsync(Task task)
+        public async Task<ETask> CreateTaskAsync(ETask Etask)
         {
-            return await _taskRepository.CreateTaskAsync(task);
+            return await _taskRepository.CreateTaskAsync(Etask);
         }
 
-        public async Task<Task> UpdateTaskAsync(int id, Task task)
+        public async Task<ETask> UpdateTaskAsync(int id, ETask Etask)
         {
-            return await _taskRepository.UpdateTaskAsync(id, task);
+            return await _taskRepository.UpdateTaskAsync(id, Etask);
         }
 
         public async Task<bool> DeleteTaskAsync(int id)

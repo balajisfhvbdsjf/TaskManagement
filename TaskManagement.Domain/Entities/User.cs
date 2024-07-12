@@ -10,11 +10,11 @@ namespace TaskManagement.Domain.Entities
         public string Role { get; set; } // Employee, Manager, Admin
         public int TeamId { get; set; }
         public Team Team { get; set; }
-        public ICollection<Task> Tasks { get; set; }
+        public ICollection<ETask> ETasks { get; set; }
 
         public User()
         {
-            Tasks = new List<Task>();
+            ETasks = new List<ETask>();
         }
     }
 }

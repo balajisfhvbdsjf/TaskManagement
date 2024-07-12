@@ -8,6 +8,6 @@ namespace TaskManagement.Domain.Entities
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
         public int TaskId { get; set; }
-        public Task Task { get; set; }
+        public ETask ETask { get; set; }
     }
 }

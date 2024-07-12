@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaskManagement.Core.Services.Interfaces;
 using TaskManagement.Domain.Entities;
-using Task = TaskManagement.Domain.Entities.Task;
 
 namespace TaskManagement.Api.Controllers
 {
@@ -13,51 +12,51 @@ namespace TaskManagement.Api.Controllers
     {
         private readonly ITaskService _taskService;
 
-        public TasksController(ITaskService taskService)
+        public TasksController(ITaskService EtaskService)
         {
-            _taskService = taskService;
+            _taskService = EtaskService;
         }
 
         // GET: api/tasks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Task>>> GetTasks()
+        public async Task<ActionResult<IEnumerable<ETask>>> GetTasks()
         {
-            var tasks = await _taskService.GetAllTasksAsync();
-            return Ok(tasks);
+            var Etasks = await _taskService.GetAllTasksAsync();
+            return Ok(Etasks);
         }
 
         // GET: api/tasks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Task>> GetTask(int id)
+        public async Task<ActionResult<ETask>> GetTask(int id)
         {
-            var task = await _taskService.GetTaskByIdAsync(id);
+            var Etask = await _taskService.GetTaskByIdAsync(id);
 
-            if (task == null)
+            if (Etask == null)
             {
                 return NotFound();
             }
 
-            return Ok(task);
+            return Ok(Etask);
         }
 
         // POST: api/tasks
         [HttpPost]
-        public async Task<ActionResult<Task>> CreateTask(Task task)
+        public async Task<ActionResult<ETask>> CreateTask(ETask Etask)
         {
-            var createdTask = await _taskService.CreateTaskAsync(task);
+            var createdTask = await _taskService.CreateTaskAsync(Etask);
             return CreatedAtAction(nameof(GetTask), new { id = createdTask.Id }, createdTask);
         }
 
         // PUT: api/tasks/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTask(int id, Task task)
+        public async Task<IActionResult> UpdateTask(int id, ETask Etask)
         {
-            if (id != task.Id)
+            if (id != Etask.Id)
             {
                 return BadRequest();
             }
 
-            await _taskService.UpdateTaskAsync(id, task);
+            await _taskService.UpdateTaskAsync(id, Etask);
 
             return NoContent();
         }
