@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaskManagement.Core.Repositories.Interfaces;
-using TaskManagement.Core.Services.Interfaces;
-using TaskManagement.Domain.Entities;
+using TaskManagement.Core.Interfaces;
+using TaskManagement.Domain.DTOs;
 
 namespace TaskManagement.Core.Services
 {
@@ -15,24 +14,24 @@ namespace TaskManagement.Core.Services
             _noteRepository = noteRepository;
         }
 
-        public async Task<Note> GetNoteByIdAsync(int id)
-        {
-            return await _noteRepository.GetNoteByIdAsync(id);
-        }
-
-        public async Task<IEnumerable<Note>> GetAllNotesAsync()
+        public async Task<IEnumerable<NoteDTO>> GetAllNotesAsync()
         {
             return await _noteRepository.GetAllNotesAsync();
         }
 
-        public async Task<Note> CreateNoteAsync(Note note)
+        public async Task<NoteDTO> GetNoteByIdAsync(int id)
         {
-            return await _noteRepository.CreateNoteAsync(note);
+            return await _noteRepository.GetNoteByIdAsync(id);
         }
 
-        public async Task<Note> UpdateNoteAsync(int id, Note note)
+        public async Task<NoteDTO> CreateNoteAsync(NoteDTO noteDTO)
         {
-            return await _noteRepository.UpdateNoteAsync(id, note);
+            return await _noteRepository.CreateNoteAsync(noteDTO);
+        }
+
+        public async Task<NoteDTO> UpdateNoteAsync(int id, NoteDTO noteDTO)
+        {
+            return await _noteRepository.UpdateNoteAsync(id, noteDTO);
         }
 
         public async Task<bool> DeleteNoteAsync(int id)

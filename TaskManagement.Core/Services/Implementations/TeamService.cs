@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaskManagement.Core.Repositories.Interfaces;
-using TaskManagement.Core.Services.Interfaces;
-using TaskManagement.Domain.Entities;
+using TaskManagement.Core.Interfaces;
+using TaskManagement.Domain.DTOs;
 
 namespace TaskManagement.Core.Services
 {
@@ -15,24 +14,24 @@ namespace TaskManagement.Core.Services
             _teamRepository = teamRepository;
         }
 
-        public async Task<Team> GetTeamByIdAsync(int id)
-        {
-            return await _teamRepository.GetTeamByIdAsync(id);
-        }
-
-        public async Task<IEnumerable<Team>> GetAllTeamsAsync()
+        public async Task<IEnumerable<TeamDTO>> GetAllTeamsAsync()
         {
             return await _teamRepository.GetAllTeamsAsync();
         }
 
-        public async Task<Team> CreateTeamAsync(Team team)
+        public async Task<TeamDTO> GetTeamByIdAsync(int id)
         {
-            return await _teamRepository.CreateTeamAsync(team);
+            return await _teamRepository.GetTeamByIdAsync(id);
         }
 
-        public async Task<Team> UpdateTeamAsync(int id, Team team)
+        public async Task<TeamDTO> CreateTeamAsync(TeamDTO teamDTO)
         {
-            return await _teamRepository.UpdateTeamAsync(id, team);
+            return await _teamRepository.CreateTeamAsync(teamDTO);
+        }
+
+        public async Task<TeamDTO> UpdateTeamAsync(int id, TeamDTO teamDTO)
+        {
+            return await _teamRepository.UpdateTeamAsync(id, teamDTO);
         }
 
         public async Task<bool> DeleteTeamAsync(int id)

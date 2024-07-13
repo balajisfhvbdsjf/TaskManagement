@@ -1,13 +1,15 @@
-﻿using TaskManagement.Domain.Entities;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using TaskManagement.Domain.DTOs;
 
-namespace TaskManagement.Core.Services.Interfaces
+namespace TaskManagement.Core.Interfaces
 {
     public interface INoteService
     {
-        Task<Note> GetNoteByIdAsync(int id);
-        Task<IEnumerable<Note>> GetAllNotesAsync();
-        Task<Note> CreateNoteAsync(Note note);
-        Task<Note> UpdateNoteAsync(int id, Note note);
+        Task<IEnumerable<NoteDTO>> GetAllNotesAsync();
+        Task<NoteDTO> GetNoteByIdAsync(int id);
+        Task<NoteDTO> CreateNoteAsync(NoteDTO noteDTO);
+        Task<NoteDTO> UpdateNoteAsync(int id, NoteDTO noteDTO);
         Task<bool> DeleteNoteAsync(int id);
     }
 }

@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaskManagement.Domain.Entities;
+using TaskManagement.Domain.DTOs;
 
-namespace TaskManagement.Core.Repositories.Interfaces
+namespace TaskManagement.Core.Interfaces
 {
     public interface ITeamRepository
     {
-        Task<Team> GetTeamByIdAsync(int id);
-        Task<IEnumerable<Team>> GetAllTeamsAsync();
-        Task<Team> CreateTeamAsync(Team team);
-        Task<Team> UpdateTeamAsync(int id, Team team);
+        Task<IEnumerable<TeamDTO>> GetAllTeamsAsync();
+        Task<TeamDTO> GetTeamByIdAsync(int id);
+        Task<TeamDTO> CreateTeamAsync(TeamDTO teamDTO);
+        Task<TeamDTO> UpdateTeamAsync(int id, TeamDTO teamDTO);
         Task<bool> DeleteTeamAsync(int id);
     }
 }

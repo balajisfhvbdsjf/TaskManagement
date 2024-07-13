@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using TaskManagement.Core.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using TaskManagement.Core.Interfaces;
+using TaskManagement.Domain.DTOs;
 using TaskManagement.Domain.Entities;
 using TaskManagement.Infrastructure.Data;
 
@@ -9,46 +11,84 @@ namespace TaskManagement.Infrastructure.Repositories
 {
     public class DocumentRepository : IDocumentRepository
     {
-        private readonly TaskManagementDbContext _dbContext;
+        private readonly TaskManagementDbContext _context;
 
-        public DocumentRepository(TaskManagementDbContext dbContext)
+        public DocumentRepository(TaskManagementDbContext context)
         {
-            _dbContext = dbContext;
+            _context = context;
         }
 
-        public async Task<Document> GetDocumentByIdAsync(int id)
+        public async Task<IEnumerable<DocumentDTO>> GetAllDocumentsAsync()
         {
-            return await _dbContext.Documents.FindAsync(id);
+            var documents = await _context.Documents
+                .Include(d => d.ETask)
+                .Select(d => DocumentToDTO(d))
+                .ToListAsync();
+
+            return documents;
         }
 
-        public async Task<IEnumerable<Document>> GetAllDocumentsAsync()
+        public async Task<DocumentDTO> GetDocumentByIdAsync(int id)
         {
-            return await _dbContext.Documents.ToListAsync();
+            var document = await _context.Documents
+                .Include(d => d.ETask)
+                .FirstOrDefaultAsync(d => d.Id == id);
+
+            return DocumentToDTO(document);
         }
 
-        public async Task<Document> CreateDocumentAsync(Document document)
+        public async Task<DocumentDTO> CreateDocumentAsync(DocumentDTO documentDTO)
         {
-            _dbContext.Documents.Add(document);
-            await _dbContext.SaveChangesAsync();
-            return document;
+            var document = new Document
+            {
+                FileName = documentDTO.FileName,
+                FilePath = documentDTO.FilePath,
+                TaskId = documentDTO.TaskId
+            };
+
+            _context.Documents.Add(document);
+            await _context.SaveChangesAsync();
+
+            return DocumentToDTO(document);
         }
 
-        public async Task<Document> UpdateDocumentAsync(int id, Document document)
+        public async Task<DocumentDTO> UpdateDocumentAsync(int id, DocumentDTO documentDTO)
         {
-            _dbContext.Entry(document).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
-            return document;
+            var document = await _context.Documents.FirstOrDefaultAsync(d => d.Id == id);
+
+            if (document == null)
+                throw new Exception($"Document with id {id} not found");
+
+            document.FileName = documentDTO.FileName;
+            document.FilePath = documentDTO.FilePath;
+            document.TaskId = documentDTO.TaskId;
+
+            await _context.SaveChangesAsync();
+
+            return DocumentToDTO(document);
         }
 
         public async Task<bool> DeleteDocumentAsync(int id)
         {
-            var document = await _dbContext.Documents.FindAsync(id);
+            var document = await _context.Documents.FirstOrDefaultAsync(d => d.Id == id);
+
             if (document == null)
                 return false;
 
-            _dbContext.Documents.Remove(document);
-            await _dbContext.SaveChangesAsync();
+            _context.Documents.Remove(document);
+            await _context.SaveChangesAsync();
+
             return true;
         }
+
+        private static DocumentDTO DocumentToDTO(Document document) =>
+            new DocumentDTO
+            {
+                Id = document.Id,
+                FileName = document.FileName,
+                FilePath = document.FilePath,
+                TaskId = document.TaskId,
+                ETask = TaskRepository.TaskToDTO(document.ETask)
+            };
     }
 }

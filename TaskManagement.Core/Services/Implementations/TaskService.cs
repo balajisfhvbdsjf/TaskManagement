@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaskManagement.Core.Repositories.Interfaces;
-using TaskManagement.Core.Services.Interfaces;
-using TaskManagement.Domain.Entities;
+using TaskManagement.Core.Interfaces;
+using TaskManagement.Domain.DTOs;
 
 namespace TaskManagement.Core.Services
 {
@@ -15,24 +15,24 @@ namespace TaskManagement.Core.Services
             _taskRepository = taskRepository;
         }
 
-        public async Task<ETask> GetTaskByIdAsync(int id)
-        {
-            return await _taskRepository.GetTaskByIdAsync(id);
-        }
-
-        public async Task<IEnumerable<ETask>> GetAllTasksAsync()
+        public async Task<IEnumerable<ETaskDTO>> GetAllTasksAsync()
         {
             return await _taskRepository.GetAllTasksAsync();
         }
 
-        public async Task<ETask> CreateTaskAsync(ETask Etask)
+        public async Task<ETaskDTO> GetTaskByIdAsync(int id)
         {
-            return await _taskRepository.CreateTaskAsync(Etask);
+            return await _taskRepository.GetTaskByIdAsync(id);
         }
 
-        public async Task<ETask> UpdateTaskAsync(int id, ETask Etask)
+        public async Task<ETaskDTO> CreateTaskAsync(ETaskDTO EtaskDTO)
         {
-            return await _taskRepository.UpdateTaskAsync(id, Etask);
+            return await _taskRepository.CreateTaskAsync(EtaskDTO);
+        }
+
+        public async Task<ETaskDTO> UpdateTaskAsync(int id, ETaskDTO EtaskDTO)
+        {
+            return await _taskRepository.UpdateTaskAsync(id, EtaskDTO);
         }
 
         public async Task<bool> DeleteTaskAsync(int id)

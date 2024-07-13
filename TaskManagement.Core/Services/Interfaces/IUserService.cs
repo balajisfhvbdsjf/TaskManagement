@@ -1,13 +1,15 @@
-﻿using TaskManagement.Domain.Entities;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using TaskManagement.Domain.DTOs;
 
-namespace TaskManagement.Core.Services.Interfaces
+namespace TaskManagement.Core.Interfaces
 {
     public interface IUserService
     {
-        Task<User> GetUserByIdAsync(int id);
-        Task<IEnumerable<User>> GetAllUsersAsync();
-        Task<User> CreateUserAsync(User user);
-        Task<User> UpdateUserAsync(int id, User user);
+        Task<IEnumerable<UserDTO>> GetAllUsersAsync();
+        Task<UserDTO> GetUserByIdAsync(int id);
+        Task<UserDTO> CreateUserAsync(UserDTO userDTO);
+        Task<UserDTO> UpdateUserAsync(int id, UserDTO userDTO);
         Task<bool> DeleteUserAsync(int id);
     }
 }

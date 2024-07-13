@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaskManagement.Core.Repositories.Interfaces;
-using TaskManagement.Core.Services.Interfaces;
-using TaskManagement.Domain.Entities;
+using TaskManagement.Core.Interfaces;
+using TaskManagement.Domain.DTOs;
 
 namespace TaskManagement.Core.Services
 {
@@ -15,24 +14,24 @@ namespace TaskManagement.Core.Services
             _documentRepository = documentRepository;
         }
 
-        public async Task<Document> GetDocumentByIdAsync(int id)
-        {
-            return await _documentRepository.GetDocumentByIdAsync(id);
-        }
-
-        public async Task<IEnumerable<Document>> GetAllDocumentsAsync()
+        public async Task<IEnumerable<DocumentDTO>> GetAllDocumentsAsync()
         {
             return await _documentRepository.GetAllDocumentsAsync();
         }
 
-        public async Task<Document> CreateDocumentAsync(Document document)
+        public async Task<DocumentDTO> GetDocumentByIdAsync(int id)
         {
-            return await _documentRepository.CreateDocumentAsync(document);
+            return await _documentRepository.GetDocumentByIdAsync(id);
         }
 
-        public async Task<Document> UpdateDocumentAsync(int id, Document document)
+        public async Task<DocumentDTO> CreateDocumentAsync(DocumentDTO documentDTO)
         {
-            return await _documentRepository.UpdateDocumentAsync(id, document);
+            return await _documentRepository.CreateDocumentAsync(documentDTO);
+        }
+
+        public async Task<DocumentDTO> UpdateDocumentAsync(int id, DocumentDTO documentDTO)
+        {
+            return await _documentRepository.UpdateDocumentAsync(id, documentDTO);
         }
 
         public async Task<bool> DeleteDocumentAsync(int id)

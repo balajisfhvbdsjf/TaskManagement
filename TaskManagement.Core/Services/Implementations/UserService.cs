@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaskManagement.Core.Repositories.Interfaces;
-using TaskManagement.Core.Services.Interfaces;
-using TaskManagement.Domain.Entities;
+using TaskManagement.Core.Interfaces;
+using TaskManagement.Domain.DTOs;
 
 namespace TaskManagement.Core.Services
 {
@@ -15,24 +14,24 @@ namespace TaskManagement.Core.Services
             _userRepository = userRepository;
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
-        {
-            return await _userRepository.GetUserByIdAsync(id);
-        }
-
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
         {
             return await _userRepository.GetAllUsersAsync();
         }
 
-        public async Task<User> CreateUserAsync(User user)
+        public async Task<UserDTO> GetUserByIdAsync(int id)
         {
-            return await _userRepository.CreateUserAsync(user);
+            return await _userRepository.GetUserByIdAsync(id);
         }
 
-        public async Task<User> UpdateUserAsync(int id, User user)
+        public async Task<UserDTO> CreateUserAsync(UserDTO userDTO)
         {
-            return await _userRepository.UpdateUserAsync(id, user);
+            return await _userRepository.CreateUserAsync(userDTO);
+        }
+
+        public async Task<UserDTO> UpdateUserAsync(int id, UserDTO userDTO)
+        {
+            return await _userRepository.UpdateUserAsync(id, userDTO);
         }
 
         public async Task<bool> DeleteUserAsync(int id)

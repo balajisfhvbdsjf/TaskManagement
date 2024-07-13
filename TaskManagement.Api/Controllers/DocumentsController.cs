@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaskManagement.Core.Services.Interfaces;
-using TaskManagement.Domain.Entities;
+using TaskManagement.Core.Interfaces;
+using TaskManagement.Domain.DTOs;
 
 namespace TaskManagement.Api.Controllers
 {
@@ -17,17 +17,17 @@ namespace TaskManagement.Api.Controllers
             _documentService = documentService;
         }
 
-        // GET: api/documents
+        // GET: api/Documents
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Document>>> GetDocuments()
+        public async Task<ActionResult<IEnumerable<DocumentDTO>>> GetDocuments()
         {
             var documents = await _documentService.GetAllDocumentsAsync();
             return Ok(documents);
         }
 
-        // GET: api/documents/5
+        // GET: api/Documents/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Document>> GetDocument(int id)
+        public async Task<ActionResult<DocumentDTO>> GetDocument(int id)
         {
             var document = await _documentService.GetDocumentByIdAsync(id);
 
@@ -39,37 +39,45 @@ namespace TaskManagement.Api.Controllers
             return Ok(document);
         }
 
-        // POST: api/documents
+        // POST: api/Documents
         [HttpPost]
-        public async Task<ActionResult<Document>> CreateDocument(Document document)
+        public async Task<ActionResult<DocumentDTO>> PostDocument(DocumentDTO documentDTO)
         {
-            var createdDocument = await _documentService.CreateDocumentAsync(document);
+            var createdDocument = await _documentService.CreateDocumentAsync(documentDTO);
             return CreatedAtAction(nameof(GetDocument), new { id = createdDocument.Id }, createdDocument);
         }
 
-        // PUT: api/documents/5
+        // PUT: api/Documents/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDocument(int id, Document document)
+        public async Task<IActionResult> PutDocument(int id, DocumentDTO documentDTO)
         {
-            if (id != document.Id)
+            if (id != documentDTO.Id)
             {
                 return BadRequest();
             }
 
-            await _documentService.UpdateDocumentAsync(id, document);
-
-            return NoContent();
+            try
+            {
+                var updatedDocument = await _documentService.UpdateDocumentAsync(id, documentDTO);
+                return Ok(updatedDocument);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
-        // DELETE: api/documents/5
+        // DELETE: api/Documents/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDocument(int id)
         {
             var result = await _documentService.DeleteDocumentAsync(id);
+
             if (!result)
             {
                 return NotFound();
             }
+
             return NoContent();
         }
     }

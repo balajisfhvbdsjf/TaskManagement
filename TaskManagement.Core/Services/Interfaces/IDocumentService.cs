@@ -4,7 +4,7 @@ using TaskManagement.Domain.DTOs;
 
 namespace TaskManagement.Core.Interfaces
 {
-    public interface IDocumentRepository
+    public interface IDocumentService
     {
         Task<IEnumerable<DocumentDTO>> GetAllDocumentsAsync();
         Task<DocumentDTO> GetDocumentByIdAsync(int id);
